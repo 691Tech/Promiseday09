@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Promise Day 2026 ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Fredoka:wght@400;600&family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    
+    <style>
+
+        /* --- 🔒 MASTER DESIGN SYSTEM --- */
+        :root {
+            /* 🎨 Pastel Palette */
+            --primary-pink: #FF8FAB;  /* Soft Pink */
+            --deep-pink: #FB6F92;     /* Darker Accent */
+            --bg-cream: #FFF0F5;      /* Lavender Blush Background */
+            --text-main: #592E2E;     /* Soft Brown Text */
+            --glass-bg: rgba(255, 255, 255, 0.25);
+            --glass-border: rgba(255, 255, 255, 0.6);
+            --dinkar-bubble: linear-gradient(135deg, #FFC2D1 0%, #ff9ebb 100%);
+            --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        html, body {
+            width: 100%;
+            max-width: 100%;
+            overflow-x: hidden; 
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg-cream);
+            background-image: radial-gradient(circle at 50% 50%, #fff0f5 0%, #ffc1e3 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            padding-bottom: 0; /* 🛑 Fixed Extra Space */
+            margin: 0;
+            overscroll-behavior-x: none;
+        }
+
+        /* Typography */
+        h1, h2, .love-font, .h6 {
+            font-family: 'Pacifico', cursive;
+            color: var(--deep-pink);
+        }
+
+        /* ❤️ Floating Hearts Background */
+        .bg-hearts {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: 0;
+            overflow: hidden;
+        }
+
+        .heart {
+            position: absolute; bottom: -50px;
+            background: var(--primary-pink);
+            width: 20px; height: 20px;
+            transform: rotate(-45deg);
+            opacity: 0.4;
+            animation: floatUp 10s linear infinite;
+        }
+        .heart::before, .heart::after {
+            content: ""; position: absolute; width: 20px; height: 20px;
+            background: inherit; border-radius: 50%;
+        }
+        .heart::before { top: -10px; left: 0; }
+        .heart::after { left: 10px; top: 0; }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(-45deg) scale(0.8); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-120vh) rotate(-45deg) scale(1.2); opacity: 0; }
+        }
+        
+        #music-gate {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle, #fff0f5, #ffb3d9);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .gate-box {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.7);
+            padding: 30px 40px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.3);
+            animation: fadePulse 2s infinite alternate;
+        }
+
+        .gate-box p {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.6rem;
+            color: #fb6f92;
+        }
+
+        .gate-box span {
+            display: block;
+            margin-top: 10px;
+            opacity: 0.7;
+        }
+
+        @keyframes fadePulse {
+            from { transform: scale(1); }
+            to { transform: scale(1.05); }
+        }
+
+        /* --- 📱 PHASE 1: FULL WIDTH CHAT UI --- */
+        .phone-wrapper {
+            padding: 10px;
+            margin-bottom: 50px;
+            display: flex;
+            justify-content: center;
+            width: 100%;
+        }
+
+        .phone-container {
+            width: 95%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.1);
+            backdrop-filter: blur(20px);
+            position: relative;
+            transform: translateY(30px);
+            opacity: 0;
+            animation: slideUpFade 1s ease forwards 0.5s;
+        }
+
+        @keyframes slideUpFade { to { opacity: 1; transform: translateY(0); } }
+
+        .chat-header {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 12px 15px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0; 
+            z-index: 100;
+        }
+
+        .profile-pic {
+            width: 45px; height: 45px;
+            background: #ffc1e3;
+            border-radius: 50%;
+            display: flex; justify-content: center; align-items: center;
+            font-size: 1.6rem;
+            border: 3px solid white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .user-info h3 {
+            font-size: 1.1rem;
+            margin: 0;
+            color: #333;
+            font-family: 'Fredoka', sans-serif;
+        }
+
+        .status {
+            font-size: 0.8rem;
+            color: #2ecc71;
+            display: flex; align-items: center; gap: 5px;
+            font-weight: 600;
+        }
+
+        .chat-body {
+            padding: 15px;
+            background: radial-gradient(circle, rgba(255,255,255,0.6) 0%, rgba(255,192,203,0.15) 100%);
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            min-height: 400px;
+        }
+
+        .chat-row {
+            display: flex;
+            flex-direction: column;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        .chat-row.show { opacity: 1; transform: translateY(0); }
+
+        .bubble {
+            max-width: 88%;
+            padding: 12px 16px;
+            border-radius: 18px;
+            font-size: 0.95rem; 
+            line-height: 1.4;
+            position: relative;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            font-family: 'Nunito', sans-serif;
+            word-wrap: break-word;
+        }
+
+        .sristy-msg .bubble {
+            background: white;
+            color: #444;
+            border-bottom-left-radius: 2px;
+            align-self: flex-start;
+        }
+        .sristy-msg { align-items: flex-start; }
+
+        .dinkar-msg .bubble {
+            background: var(--dinkar-bubble);
+            color: #592E2E;
+            border-bottom-right-radius: 2px;
+            align-self: flex-end;
+        }
+        .dinkar-msg { align-items: flex-end; }
+
+        .msg-time {
+            font-size: 0.7rem;
+            opacity: 0.6;
+            margin-top: 5px;
+            display: block;
+            text-align: right;
+            margin-right: 5px;
+        }
+
+        /* --- 💍 PHASE 2: FOREVER LOVE LETTER --- */
+        .forever-section {
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 30px 0;
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            transition: opacity 1.5s ease;
+            width: 100%;
+        }
+        .forever-section.show { opacity: 1; }
+
+        .forever-text {
+            font-size: 2.8rem;
+            font-family: 'Pacifico', cursive;
+            color: var(--deep-pink);
+            margin-bottom: 25px;
+            letter-spacing: 2px;
+            animation: slowZoom 5s infinite alternate ease-in-out;
+        }
+
+        @keyframes slowZoom { from { transform: scale(1); } to { transform: scale(1.1); } }
+
+        .love-note {
+            background: rgba(255, 255, 255, 0.65);
+            backdrop-filter: blur(12px);
+            border: 2px solid white;
+            border-radius: 20px;
+            padding: 30px 20px;
+            width: 100%;
+            max-width: 650px;
+            box-shadow: 0 15px 40px rgba(255, 111, 146, 0.15);
+            font-family: 'Fredoka', sans-serif;
+            line-height: 1.7;
+            color: var(--text-main);
+            transform: translateY(30px);
+            transition: transform 0.8s ease;
+            font-size: 0.95rem;
+        }
+
+        .forever-section.show .love-note { transform: translateY(0); }
+
+        .highlight-text {
+            color: var(--deep-pink);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .signature-text {
+            font-family: 'Pacifico', cursive;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            margin-top: 15px;
+        }
+
+        /* --- 📸 PHASE 3: CINEMATIC SLIDER --- */
+        .proof-section {
+            padding: 40px 0;
+            margin-bottom: 50px; /* Gap between galleries */
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .gallery-track {
+            display: flex;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory; 
+            gap: 15px;
+            padding: 20px 20px;
+            width: 100%;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            -webkit-overflow-scrolling: touch; 
+        }
+        .gallery-track::-webkit-scrollbar { display: none; }
+
+        .gallery-card {
+            flex: 0 0 85vw;
+            max-width: 450px;
+            scroll-snap-align: center;
+            background: white;
+            padding: 8px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            opacity: 0.7; /* Default blurred state */
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .gallery-card img {
+            width: 100%;
+            border-radius: 12px;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .proof-badge {
+            position: absolute;
+            top: 15px; right: 15px;
+            background: rgba(255,255,255,0.95);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: var(--deep-pink);
+            box-shadow: 0 5px 10px rgba(0,0,0,0.1);
+            font-family: 'Fredoka', sans-serif;
+            font-size: 0.8rem;
+        }
+        
+        .swipe-hint {
+            text-align: center;
+            font-family: 'Fredoka', sans-serif;
+            opacity: 0.6;
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+            animation: bounceLeft 2s infinite;
+        }
+        @keyframes bounceLeft { 0%, 100% {transform: translateX(0);} 50% {transform: translateX(10px);} }
+
+        @media (min-width: 768px) {
+            .gallery-card { flex: 0 0 380px; }
+            .gallery-track { padding: 20px 0; justify-content: center; } 
+            .chat-body { padding: 25px; }
+            .forever-text { font-size: 3.5rem; }
+            .love-note { padding: 40px 30px; font-size: 1.05rem; }
+        }
+
+        /* --- 🌙 END CARD --- */
+        .end-card {
+            text-align: center;
+            padding: 60px 20px;
+            background: black;
+            color: white;
+            border-radius: 30px 30px 0 0;
+            position: relative;
+            width: 100%;
+            margin-top: 0; /* Remove top gap */
+        }
+
+        .end-text {
+            font-family: 'Nunito', sans-serif; 
+            font-size: 1rem; 
+            font-weight: 400; 
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        .header { text-align: center; padding: 50px 20px; animation: fadeIn 2s ease; width: 100%; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    </style>
+</head>
+<body>
+    
+<div id="music-gate">
+  <div class="gate-box">
+    <p>💖 Tap to enter our promise world 💖</p>
+    <span>🎵 Music made for you</span>
+  </div>
+</div>
+    
+<audio id="bg-music" loop>
+  <source src="./song.mp3" type="audio/mpeg">
+</audio>
+ <div class="header">
+        <h1>For Mine Forever 💕♾️ </h1> 
+        <p style="opacity: 0.7; margin-top: 5px;">A Journey From Fear To Forever...</p>
+    </div>
+    <div class="bg-hearts" id="heart-container"></div>
+
+    <div class="phone-wrapper">
+        <div class="phone-container">
+            
+            <div class="chat-header">
+                <div class="profile-pic">💌</div>
+                <div class="user-info">
+                    <h3>Mine Jaaan 💮💕</h3>
+                    <span class="status">● Online</span>
+                </div>
+            </div>
+
+            <div class="chat-body">
+                
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">islye acha lgta h hmko ki ha koi mere jaisa h jaisa chahte h waisa h koi mere lyf h</div>
+                    <span class="msg-time">10:00 PM</span>
+                </div>
+
+                <div class="chat-row dinkar-msg">
+                    <div class="bubble">Sme here 😎</div>
+                    <span class="msg-time">10:01 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">bs yhi soch lete h ki chlo thik h hai to lekin kb tk 👉🏻👈🏻</div>
+                    <span class="msg-time">10:02 PM</span>
+                </div>
+
+                <div class="chat-row dinkar-msg">
+                    <div class="bubble">Kab tak 🤔 i think so</div>
+                </div>
+                <div class="chat-row dinkar-msg" style="margin-top: -8px;">
+                    <div class="bubble">1/0</div>
+                    <span class="msg-time">10:03 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">nhi 🥺<br>aisa nhi hota h 🥺</div>
+                    <span class="msg-time">10:04 PM</span>
+                </div>
+
+                <div class="chat-row dinkar-msg">
+                    <div class="bubble">Sab hota ha 😌</div>
+                    <span class="msg-time">10:05 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">koi kitna v close ho jye lkin bdl jta h sb hm dekh chuke h islye hm frnd hi bnana chordiye the ☹️</div>
+                    <span class="msg-time">10:06 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">hm bht baar dekh chuke h aj tk hurt hote h ki frnd tk jo bht zyda close bn jte h at the last unknown bn jte h</div>
+                    <span class="msg-time">10:07 PM</span>
+                </div>
+
+                <div class="chat-row dinkar-msg">
+                    <div class="bubble">Chalo tumko galat prove kr dnge is bar ham 😂<br>ham toh nahi hi bdlte ha</div>
+                    <span class="msg-time">10:08 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">ye v sune h lkin last vishwas kiye h ap p 🙂 so let's have this promise 🤞🏻</div>
+                    <span class="msg-time">10:09 PM</span>
+                </div>
+
+                <div class="chat-row dinkar-msg">
+                    <div class="bubble">Dont worry mein apna promise kabhi nahi todta 🤞</div>
+                    <span class="msg-time">10:10 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">🥺🥺 promise</div>
+                    <span class="msg-time">10:10 PM</span>
+                </div>
+
+                <div class="chat-row dinkar-msg">
+                    <div class="bubble">Yeah sme here mine promise 😌❤️<br>ham toh hamsha rehnga hi dont worrey</div>
+                    <span class="msg-time">10:11 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">thankuh 🥺</div>
+                    <span class="msg-time">10:11 PM</span>
+                </div>
+
+                <div class="chat-row sristy-msg">
+                    <div class="bubble">hmm bcz I got that person again to whom I can share everything 🥺❤️</div>
+                    <span class="msg-time">10:12 PM</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <div class="forever-section">
+        
+        <h2 class="forever-text">DINSRI 💮💕</h2>
+
+        <div class="love-note">
+            <p>
+                Jaan Jab Se Tum Meri Life Mein Aayi Ho Na <br>
+                Sab Kuch Ekdm Alag Sa Ho Gya Hein 🥺♾️<br>
+                Har Din Har Samay Bas Tumhare Yadon Se Hi Start Hoti Hein
+            </p>
+            <br>
+            <p>
+                It's More Than 1 Year Of Being With You 💮<br>
+                Mere Liye Tum Bht Jaruri Ho 💕 <br>
+                Tumahare Bina Sab Adhura Lagta Hein Sab Khali Khali Sa Lagta Hein 👉🏻 remo👈🏻
+            </p>
+            <br>
+            <p>
+                Aj Propose Day Hein 🥺 Not Only For This Day <br>
+                Par Hamesha Ke Liye... <br>
+                Mein Tumse Promise Krta Hu<br>
+                Ki Har Mushkil Mein Tumhara Sath Hath Pakad Kar Ke Khada Rahunga 🤝
+            </p>
+            <p>
+                Tumhari Har Khushi Ko Apni Khushi Aur <br>
+                Har Dukh Mein Bhi Hamsha Rahunga <br>
+                Aur Kabhi Tumhara Ankhon Me Ansso Aane Nahi Denge 🥺
+            </p>
+            <br>
+            <p class="highlight-text">
+                Sirf Aaj Nahi... Sirf Kal Nahi <br>
+                Hamsha Hamsha 👉🏻👈🏻 Forever And Ever 💕♾️ 🤞🏻
+            </p>
+            <br>
+            <hr style="border: 0; border-top: 1px dashed var(--deep-pink); margin: 20px 0; opacity: 0.5;">
+            
+            <p class="signature-text">
+                I Love You Mine Sristy 👉🏻👈🏻💕 <br>
+                My Sweetheart My Everything 🌹<br>
+                <span style="font-size: 0.9rem; opacity: 0.8;">My Closest One Who Keeps My Heart</span><br>
+                <strong style="font-size: 1.5rem; color: var(--deep-pink);">I Love You So Much ♾️💕</strong>
+            </p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-bottom: 20px; margin-top: 60px;">
+        <h2 class="love-font" style="font-size: 2.5rem;"> Forever ♾️💕</h2>
+        <p class="swipe-hint">Swipe to see magic &rarr;</p>
+    </div>
+
+    <div class="proof-section">
+        <div class="gallery-track">
+            <div class="gallery-card"><div class="proof-badge">1 / 13</div><img src="./images/1.png" alt="Chat 1" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">2 / 13</div><img src="./images/2.png" alt="Chat 2" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">3 / 13</div><img src="./images/3.png" alt="Chat 3" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">4 / 13</div><img src="./images/4.png" alt="Chat 4" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">5 / 13</div><img src="./images/5.png" alt="Chat 5" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">6 / 13</div><img src="./images/6.png" alt="Chat 6" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">7 / 13</div><img src="./images/7.png" alt="Chat 7" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">8 / 13</div><img src="./images/8.png" alt="Chat 8" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">9 / 13</div><img src="./images/9.png" alt="Chat 9" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">10 / 13</div><img src="./images/10.png" alt="Chat 10" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">11 / 13</div><img src="./images/11.png" alt="Chat 11" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">12 / 13</div><img src="./images/12.png" alt="Chat 12" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">13 / 13</div><img src="./images/13.png" alt="Chat 13" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">14 / 14</div><img src="./images/14.png" alt="Chat 14" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">15 / 15</div><img src="./images/15.png" alt="Chat 15" loading="lazy"></div>
+        </div>
+    </div>
+        
+    <div class="proof-section" style="margin-bottom: 0; padding-bottom: 20px;">
+        <div class="gallery-track">
+            <div class="gallery-card"><div class="proof-badge">1 / 5</div><img src="./images/101.png" alt="Chat 1" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">2 / 5</div><img src="./images/102.png" alt="Chat 2" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">3 / 5</div><img src="./images/103.png" alt="Chat 3" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">4 / 5</div><img src="./images/104.png" alt="Chat 4" loading="lazy"></div>
+            <div class="gallery-card"><div class="proof-badge">5 / 5</div><img src="./images/105.png" alt="Chat 5" loading="lazy"></div>
+        </div>
+    </div>
+        
+    <div class="end-card">
+        <h1 class="Pacifico" style="font-size: 2.2rem;">Happy Promise Day</h1>
+        <br><br>
+        <div class="end-text">
+            Not all promises are meant to be broken.<br>Some promises are meant to be fulfilled throughout life.
+            <br> <br>
+            <h6 class="pacifico" style="font-size: 1.0rem;">Jate Honge Log Chor Kr Par Kal Bhi Bole The Aj Bhi Bolenge I Will Stay With You Betu Forever 💮🫶🏻💕</h6>
+        </div>
+        <br>
+    </div>
+
+    <script>
+        function createHearts() {
+            const container = document.getElementById('heart-container');
+            for(let i=0; i<30; i++) {
+                let heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = Math.random() * 90 + "vw"; 
+                heart.style.animationDuration = Math.random() * 5 + 5 + "s";
+                heart.style.animationDelay = Math.random() * 5 + "s";
+                container.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        const gate = document.getElementById("music-gate");
+        const audio = document.getElementById("bg-music");
+
+        gate.addEventListener("click", () => {
+          audio.play();
+          gate.remove();
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: "0px 0px -50px 0px"
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('show');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.chat-row').forEach(el => observer.observe(el));
+        observer.observe(document.querySelector('.forever-section'));
+        
+        // 🛑 FIXED: SLIDER LOGIC FOR MULTIPLE GALLERIES
+        const tracks = document.querySelectorAll('.gallery-track');
+
+        tracks.forEach(track => {
+            // Function to update cards in THIS specific track
+            const updateCards = () => {
+                const cards = track.querySelectorAll('.gallery-card');
+                const center = track.scrollLeft + (track.offsetWidth / 2);
+                
+                cards.forEach(card => {
+                    const cardCenter = card.offsetLeft + (card.offsetWidth / 2);
+                    const distance = Math.abs(center - cardCenter);
+                    
+                    if(distance < 200) {
+                        card.style.transform = "scale(1)";
+                        card.style.opacity = "1";
+                        card.style.zIndex = "10";
+                    } else {
+                        card.style.transform = "scale(0.9)";
+                        card.style.opacity = "0.7";
+                        card.style.zIndex = "1";
+                    }
+                });
+            };
+
+            // Attach listener to this track
+            track.addEventListener('scroll', updateCards);
+            
+            // Run once initially to fix initial blur
+            updateCards();
+        });
+        
+    </script>
+</body>
+</html>
